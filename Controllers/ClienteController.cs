@@ -16,7 +16,13 @@ namespace Desafio_GSO_Medicina_Ocupacional_1.Controllers
         {
             this.context = context;
         }
-
+        
+        /// <summary>
+        /// Representa um registro de cliente
+        /// </summary>
+        /// <param name = "nome">Representa o nome do Cliente - É obrigatorio</param>
+        /// <param name = "cpf">Representa o cpf do Cliente - É obrigatorio</param>
+        /// <param name = "data">Representa a data do Cliente - É obrigatorio</param>
         [HttpPost("RegistrarCliente")]
         public ActionResult RegistrarCliente(string nome, int cpf, DateTime data)
         {
@@ -30,6 +36,13 @@ namespace Desafio_GSO_Medicina_Ocupacional_1.Controllers
             return Ok("Cliente cadastrado com sucesso");
         }
 
+        /// <summary>
+        /// Representa a alteração de dados de um cliente
+        /// </summary>
+        /// <param name = "id">Representa o ID do Cliente para poder achar no banco de dados - É obrigatorio</param>
+        /// <param name = "nome">Representa o nome do Cliente - Não é obrigatorio</param>
+        /// <param name = "cpf">Representa o cpf do Cliente - Não é obrigatorio</param>
+        /// <param name = "data">Representa a data do Cliente - Não é obrigatorio</param>
         [HttpPost("EditarCliente")]
         public ActionResult EditarCliente(int id, string nome, int cpf, DateTime data)
         {
@@ -45,6 +58,10 @@ namespace Desafio_GSO_Medicina_Ocupacional_1.Controllers
             return Ok("Cliente editado com sucesso");
         }
 
+        /// <summary>
+        /// Representa a exclusão do cliente
+        /// </summary>
+        /// <param name = "id">Representa o ID do Cliente para poder achar no banco de dados - É obrigatorio</param>
         [HttpPost("ExcluirCliente")]
         public ActionResult ExcluirCliente(int id)
         {
@@ -57,6 +74,9 @@ namespace Desafio_GSO_Medicina_Ocupacional_1.Controllers
             return Ok($"Cliente {nome} foi removido com sucesso!");
         }
 
+        /// <summary>
+        /// Representa a a listagem de todos os clientes através de uma lista dinamica para formatação dos dados
+        /// </summary>
         [HttpGet("ListarCliente")]
         public ActionResult ListarCliente()
         {
@@ -67,9 +87,8 @@ namespace Desafio_GSO_Medicina_Ocupacional_1.Controllers
                 string dataFormatada = item.DataNascimento.ToString("dd/MM/yyyy");
                 c.Add(new { item.Id, item.Nome, item.Cpf, dataFormatada });
             }
-            
+
             return Ok(c.ToList());
         }
-
     }
 }

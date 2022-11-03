@@ -14,6 +14,9 @@ namespace Desafio_GSO_Medicina_Ocupacional_1.Models
         public int Cpf { get; set; }
         public DateTime DataNascimento { get; set; }
 
+        /// <summary>
+        /// Representa o construtor do Cliente (O id não é obrigatorio pois ele é auto_increment chave primaria)
+        /// </summary>
         public Cliente(string nome, int cpf, DateTime dataNascimento)
         {
             Nome = nome;
