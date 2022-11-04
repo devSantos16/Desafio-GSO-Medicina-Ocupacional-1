@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Desafio_GSO_Medicina_Ocupacional_1.Migrations
 {
     [DbContext(typeof(ClienteContext))]
-    [Migration("20221103210936_CriacaoTabelaCliente")]
-    partial class CriacaoTabelaCliente
+    [Migration("20221104200138_CriacaoTabelaContato")]
+    partial class CriacaoTabelaContato
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,8 +32,8 @@ namespace Desafio_GSO_Medicina_Ocupacional_1.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Cpf")
-                        .HasColumnType("int");
+                    b.Property<string>("Cpf")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("datetime2");
