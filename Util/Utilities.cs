@@ -11,14 +11,12 @@ namespace Desafio_GSO_Medicina_Ocupacional_1.Util
         public Utilities()
         {
         }
-        
+
         // Falta criar summario 
         public string ValidarNome(string nome, string nomeValidacao)
         {
             if (nomeValidacao == null)
-            {
                 return nome;
-            }
 
             return nomeValidacao;
         }
@@ -47,8 +45,14 @@ namespace Desafio_GSO_Medicina_Ocupacional_1.Util
         // Falta fazer sumario e invalidar letras e caracteres
         public string ValidarCPF(string cpf)
         {
+            if (cpf.Where(c => char.IsLetter(c)).Count() > 0 ||
+            cpf.Where(c => char.IsSymbol(c)).Count() > 0 ||
+            cpf.Where(c => char.IsPunctuation(c)).Count() > 0)
+                throw new Exception("Erro, o Cpf não pode conter Pontuacao, Letras ou Simbolos !");
+
             if (cpf.Length != 11)
                 throw new Exception("Erro, o Cpf deve ter 11 digitos !");
+
             return cpf;
         }
         // Falta criar summario
