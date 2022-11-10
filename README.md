@@ -14,7 +14,7 @@ Para rodar o programa você deve rodar as migrations e upar no banco de dados SQ
 Adiciona um commit do entity framework no codigo 
 
 ```
-dotnet-ef migrations add CriacaoTabelaContato
+dotnet-ef migrations add CriacaoTabelas
 ``` 
 
 ```
