@@ -11,38 +11,52 @@ namespace Desafio_GSO_Medicina_Ocupacional_1.Util
         public Utilities()
         {
         }
-
+        
         // Falta criar summario 
         public string ValidarNome(string nome, string nomeValidacao)
         {
-            if (nomeValidacao == String.Empty)
+            if (nomeValidacao == null)
             {
                 return nome;
             }
+
             return nomeValidacao;
         }
 
-        // Falta sumario
+        // Falta criar summario
         public string ValidarCPF(string cpf, string cpfValidacao)
         {
-            if (cpfValidacao == string.Empty)
+            if (cpfValidacao == null)
             {
-                Console.WriteLine("Caiu aqui na propriedade");
-                ValidarCPF(cpf);
                 return cpf;
             }
-            ValidarCPF(cpfValidacao);
-            return cpfValidacao;
+
+            return ValidarCPF(cpfValidacao);
+        }
+        // Falta criar summario
+        public dynamic ValidarData(DateTime data, string dataValidacao)
+        {
+            if (dataValidacao == null)
+            {
+                return data;
+            }
+
+            return ValidarData(dataValidacao);
         }
 
         // Falta fazer sumario e invalidar letras e caracteres
-        public void ValidarCPF(string cpf)
+        public string ValidarCPF(string cpf)
         {
             if (cpf.Length != 11)
-            {
                 throw new Exception("Erro, o Cpf deve ter 11 digitos !");
-            }
-            return;
+            return cpf;
         }
+        // Falta criar summario
+        public DateTime ValidarData(string data)
+        {
+            string dataFormatada = data.Replace("%", "-").Replace("2F", "");
+            return Convert.ToDateTime(dataFormatada);
+        }
+
     }
 }

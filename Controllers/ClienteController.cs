@@ -15,7 +15,6 @@ namespace Desafio_GSO_Medicina_Ocupacional_1.Controllers
         public ClienteController(ClienteContext context)
         {
             this.context = context;
-
         }
 
         /// <summary>
@@ -25,18 +24,18 @@ namespace Desafio_GSO_Medicina_Ocupacional_1.Controllers
         /// <param name = "cpf">Representa o cpf do Cliente - É obrigatorio</param>
         /// <param name = "data">Representa a data do Cliente - É obrigatorio</param>
         [HttpPost("RegistrarCliente {nome} {cpf} {data}")]
-        public ActionResult RegistrarCliente(string nome, string cpf, DateTime data)
+        public ActionResult RegistrarCliente(string nome, string cpf, string data)
         {
+            Utilities Util = new Utilities();
+            string cpfFormatado = Util.ValidarCPF(cpf);
+            DateTime dataFormatada = Util.ValidarData(data);
 
-            // Tem que arrumar a data -- Validação do CPF do registro
-            Cliente c = new Cliente(nome, cpf, data);
+            Cliente c = new Cliente(nome, cpfFormatado, dataFormatada);
 
             this.context.Clientes.Add(c);
             this.context.SaveChanges();
 
-            Console.WriteLine(cpf);
-
-            return Ok($"Cliente cadastrado com sucesso | Dados: {c.DataNascimento}");
+            return Ok($"Cliente cadastrado com sucesso {c.DataNascimento}");
         }
 
         /// <summary>
@@ -47,14 +46,18 @@ namespace Desafio_GSO_Medicina_Ocupacional_1.Controllers
         /// <param name = "cpf">Representa o cpf do Cliente - Não é obrigatorio</param>
         /// <param name = "data">Representa a data do Cliente - Não é obrigatorio</param>
         [HttpPut("EditarCliente {id}")]
-        public ActionResult EditarCliente(int id, string nome, string cpf, DateTime data)
+        public ActionResult EditarCliente(int id, string nome, string cpf, string data)
         {
             var cliente = this.context.Clientes.Find(id);
             Utilities Util = new Utilities();
+            
+            string nomeValidacao = Util.ValidarNome(cliente.Nome, nome);
+            string cpfValidacao =  Util.ValidarCPF(cliente.Cpf, cpf);
+            DateTime dataNascimentoValidacao = Util.ValidarData(cliente.DataNascimento, data);
 
-            cliente.Nome = Util.ValidarNome(cliente.Nome, nome);
-            cliente.Cpf = Util.ValidarCPF(cliente.Cpf, cpf);
-            cliente.DataNascimento = data;
+            cliente.Nome =  nomeValidacao;
+            cliente.Cpf = cpfValidacao;
+            cliente.DataNascimento = dataNascimentoValidacao;
 
             this.context.Clientes.Update(cliente);
             this.context.SaveChanges();
@@ -84,13 +87,15 @@ namespace Desafio_GSO_Medicina_Ocupacional_1.Controllers
         [HttpGet("ListarCliente")]
         public ActionResult ListarCliente()
         {
+            Utilities util = new Utilities();
             List<dynamic> c = new List<dynamic>();
 
             foreach (var item in this.context.Clientes.ToList())
             {
-                string dataFormatada = item.DataNascimento.ToString("dd/MM/yyyy");
-                c.Add(new { item.Id, item.Nome, item.Cpf, dataFormatada });
+                string dataFormatada = Convert.ToString(item.DataNascimento.ToString("MM/dd/yyyy"));
+                c.Add(new { item.Id, item.Nome, item.Cpf, dataFormatada});
             }
+            
             return Ok(c.ToList());
         }
     }
